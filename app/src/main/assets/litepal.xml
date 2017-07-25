@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
     <dbname value="Calendar" ></dbname>
-    <version value="5" ></version>
+    <version value="9" ></version>
     <list>
         <mapping class="com.wcp.data.CalendarData"></mapping>
     </list>

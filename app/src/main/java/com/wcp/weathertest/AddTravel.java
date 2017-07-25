@@ -34,6 +34,8 @@ import android.widget.Toast;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.wcp.data.CalendarData;
 
+import org.litepal.crud.DataSupport;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -76,7 +78,7 @@ public class AddTravel extends AppCompatActivity {
     private String selectCalendar;
     private Boolean AllDay=false;
 
-    List<Date> rem=new ArrayList<>();
+    List<Long> rem=new ArrayList<>();
 
     ArrayAdapter<String> adapter;
     List<String> contactsList = new ArrayList<>();
@@ -501,49 +503,57 @@ public class AddTravel extends AppCompatActivity {
                 EndDate.setDate(selectedEndDay);
                 EndDate.setHours(selectedEndHour);
                 EndDate.setMinutes(selectedEndMinute);
-
+/*
                 Date remind=new Date();
                 remind.setYear(selectedYear-1900);
                 remind.setMonth(selectedMonth-1);
                 remind.setHours(selectedHour);
                 remind.setMinutes(selectedMinute);
                 remind.setDate(selectedDay);
-                long remind_l=remind.getTime();
+                */
+                long remind_l=date.getTime();
+
+
+                CalendarData newTravel=new CalendarData();
 
                 rem.clear();
-                //List<Date> rem=new ArrayList<>();
+                newTravel.getRemind().clear();
                 int x=0;
                 for(Object i:selectedRemind){
                     switch((int)i){
                         case 1:{
                             Date remind_m=new Date(remind_l-1000*60*5);
-                            rem.add(remind_m);
+                            rem.add(remind_m.getTime());
                             break;
                         }
                         case 2:{
                             Date remind_m=new Date(remind_l-1000*60*30);
-                            rem.add(remind_m);
+                            rem.add(remind_m.getTime());
                             break;
                         }
                         case 3:{
                             Date remind_m=new Date(remind_l-1000*60*60);
-                            rem.add(remind_m);
+                            rem.add(remind_m.getTime());
                             break;
                         }
                         case 4:{
                             Date remind_m=new Date(remind_l-1000*60*60*24);
-                            rem.add(remind_m);
+                            rem.add(remind_m.getTime());
                             break;
                         }
                     }
                 }
 
 
-                CalendarData newTravel=new CalendarData();
                 newTravel.setName(selectedName);
                 newTravel.setAllDay(AllDay);
-                newTravel.setDate(date);
-                newTravel.setEndDate(EndDate);
+                if(AllDay){
+                    newTravel.setDate(getDayZero(date));
+                    newTravel.setEndDate(getDayZero(date));
+                }else {
+                    newTravel.setDate(date);
+                    newTravel.setEndDate(EndDate);
+                }
                 newTravel.setRemind(rem);
                 newTravel.setInvite(selectInviter);
                 newTravel.setBelong(selectCalendar);
@@ -554,12 +564,23 @@ public class AddTravel extends AppCompatActivity {
                     Toast.makeText(AddTravel.this,"save error!",Toast.LENGTH_LONG).show();
                 }
                 Toast.makeText(AddTravel.this, "已保存!", Toast.LENGTH_LONG).show();
+
                 Log.d("TAG",newTravel.toString());
+
 
                 finish();
 
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private Date getDayZero(Date day){
+        Date out=day;
+        out.setHours(0);
+        out.setMinutes(0);
+        out.setSeconds(0);
+
+        return out;
     }
 }

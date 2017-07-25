@@ -1,17 +1,11 @@
 package com.wcp.adapter;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.SmsManager;
@@ -26,12 +20,11 @@ import android.widget.Toast;
 
 import com.wcp.data.CalendarData;
 import com.wcp.weathertest.DetailsAndDel;
-import com.wcp.weathertest.MainActivity;
 import com.wcp.weathertest.R;
-import com.wcp.weathertest.TravelFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -178,7 +171,7 @@ public class TravelAdapter extends RecyclerView.Adapter<TravelAdapter.ViewHolder
             data_s.toArray(dataSet);
 
 
-            Log.d("TAG",dataSet[position].toString());
+            Log.d("TAG",data_s.get(position).toString());
 
             if(dataSet[position].getDate()!=null) {
                 begin = fm.format(dataSet[position].getDate());
@@ -199,7 +192,7 @@ public class TravelAdapter extends RecyclerView.Adapter<TravelAdapter.ViewHolder
             String remind_time;
             String invite_p;
             if(dataSet[position].getRemind()!=null && dataSet[position].getRemind().size()>0) {
-                remind_time = fn.format(dataSet[position].getRemind().get(0));
+                remind_time = fn.format(new Date(dataSet[position].getRemind().get(0)));
             }else{
                 remind_time="无";
             }

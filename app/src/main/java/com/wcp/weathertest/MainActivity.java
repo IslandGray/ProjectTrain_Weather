@@ -306,12 +306,18 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
             sendMessage();
         } else if (id == R.id.nav_me) {
-
+            final AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle("关于");
+            builder.setMessage("wcp@Copyright");
+            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            AlertDialog about=builder.show();
         } else if(id == R.id.nav_exit) {
-            //ft.remove(mCalendarFreg);
-            //ft.remove(mWeatherFrag);
-            //ft.remove(mTravelFrag);
-            //ft.commit();
+
             Toast.makeText(MainActivity.this,"已退出",Toast.LENGTH_LONG).show();
             MainActivity.this.finish();
         }

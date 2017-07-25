@@ -21,7 +21,7 @@ public class CalendarData extends DataSupport {
     private Date Date;
     private Date EndDate;
     private Boolean AllDay;
-    private List<Date> Remind=new ArrayList<>();
+    private List<Long> Remind=new ArrayList<>();
     private String Invite;
 
     public int getId() {
@@ -72,13 +72,13 @@ public class CalendarData extends DataSupport {
         AllDay = allDay;
     }
 
-    public List<java.util.Date> getRemind() {
+    public List<Long> getRemind() {
         return Remind;
     }
 
-    public void setRemind(List<java.util.Date> remind) {
-        Remind.clear();
-        Remind.addAll(remind);
+    public void setRemind(List<Long> remind) {
+        this.Remind.clear();
+        this.Remind.addAll(remind);
     }
 
     public String getInvite() {

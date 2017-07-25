@@ -590,47 +590,61 @@ public class DetailsAndDel extends AppCompatActivity {
                     savedEndDay.setHours(selectedEndHour);
                     savedEndDay.setMinutes(selectedEndMinute);
                 }
-
+/*
                 Date remind=new Date();
                 remind.setYear(selectedYear-1900);
-                remind.setMonth(selectedMonth);
+                remind.setMonth(selectedMonth-1);
                 remind.setHours(selectedHour);
                 remind.setMinutes(selectedMinute);
                 remind.setDate(selectedDay);
-                long remind_l=remind.getTime();
+*/
+                long remind_l=savedBeginDay.getTime();
 
-                List<Date> rem=new ArrayList<>();
+                List<Long> rem=new ArrayList<>();
                 for(Object i:selectedRemind){
                     switch((int)i){
                         case 1:{
                             Date remind_m=new Date(remind_l-1000*60*5);
-                            rem.add(remind_m);
+                            Log.d("TAG","提醒时间"+remind_m);
+                            rem.add(remind_m.getTime());
                             break;
                         }
                         case 2:{
                             Date remind_m=new Date(remind_l-1000*60*30);
-                            rem.add(remind_m);
+                            Log.d("TAG","提醒时间"+remind_m);
+                            rem.add(remind_m.getTime());
                             break;
                         }
                         case 3:{
                             Date remind_m=new Date(remind_l-1000*60*60);
-                            rem.add(remind_m);
+                            Log.d("TAG","提醒时间"+remind_m);
+                            rem.add(remind_m.getTime());
                             break;
                         }
                         case 4:{
                             Date remind_m=new Date(remind_l-1000*60*60*24);
-                            rem.add(remind_m);
+                            Log.d("TAG","提醒时间"+remind_m);
+                            rem.add(remind_m.getTime());
                             break;
                         }
                     }
+                }
+                if(selectedRemind.contains((int)0) ||selectedRemind.size()==0){
+                    rem.clear();
+                    OldD.setToDefault("Remind");
                 }
 
                 try {
                     //CalendarData newTravel=new CalendarData();
                     OldD.setName(selectedName);
                     OldD.setAllDay(AllDay);
-                    OldD.setDate(savedBeginDay);
-                    OldD.setEndDate(savedEndDay);
+                    if(!AllDay) {
+                        OldD.setDate(savedBeginDay);
+                        OldD.setEndDate(savedEndDay);
+                    }else {
+                        OldD.setDate(getDayZero(savedBeginDay));
+                        OldD.setEndDate(savedBeginDay);
+                    }
                     OldD.setRemind(rem);
                     OldD.setInvite(selectInviter);
                     OldD.setBelong(selectCalendar);
@@ -639,7 +653,6 @@ public class DetailsAndDel extends AppCompatActivity {
                     } else {
                         Toast.makeText(DetailsAndDel.this, "save error!", Toast.LENGTH_LONG).show();
                     }
-
 
                     Log.d("TAG", OldD.toString());
                 }catch(Exception e){
@@ -653,4 +666,12 @@ public class DetailsAndDel extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private Date getDayZero(Date day){
+        Date out=day;
+        out.setHours(0);
+        out.setMinutes(0);
+        out.setSeconds(0);
+
+        return out;
+    }
 }
