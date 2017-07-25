@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/light"
+    android:fitsSystemWindows="true">
+
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/layout_swipe_refresh_weather"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true">
+
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="@dimen/fab_margin"
+                app:backgroundTint="@color/cardview_dark_background"
+                app:srcCompat="@android:drawable/ic_menu_mylocation" />
+
+            <ImageButton
+                android:id="@+id/fresh"
+                android:layout_width="45dp"
+                android:layout_height="55dp"
+                android:layout_gravity="end"
+                android:layout_marginRight="45dp"
+                android:background="@color/colorPrimary"
+                android:visibility="invisible"
+                app:srcCompat="@android:drawable/stat_notify_sync_noanim" />
+
+            <ImageButton
+                android:id="@+id/freshing"
+                android:layout_width="45dp"
+                android:layout_height="55dp"
+                android:layout_gravity="end"
+                android:layout_marginRight="45dp"
+                android:background="@color/colorPrimary"
+                android:visibility="invisible"
+                app:srcCompat="@android:drawable/ic_popup_sync" />
+
+            <ImageButton
+                android:id="@+id/addButton"
+                android:layout_width="45dp"
+                android:layout_height="55dp"
+                android:layout_gravity="end"
+                android:layout_marginRight="90dp"
+                android:background="@color/colorPrimary"
+                android:visibility="gone"
+                app:srcCompat="@android:drawable/ic_menu_mylocation" />
+
+            <include layout="@layout/content_main" />
+
+        </android.support.design.widget.CoordinatorLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:checkable="true"
+            android:checked="true"
+            android:icon="@android:drawable/btn_star"
+            android:title="家庭" />
+        <item
+            android:id="@+id/nav_work"
+            android:checkable="true"
+            android:checked="true"
+            android:icon="@android:drawable/ic_menu_myplaces"
+            android:title="工作" />
+        <item
+            android:id="@+id/nav_holiday"
+            android:checkable="true"
+            android:checked="true"
+            android:icon="@android:drawable/ic_menu_month"
+            android:title="节假日" />
+        <item
+            android:id="@+id/nav_warn"
+            android:checkable="true"
+            android:checked="true"
+            android:icon="@android:drawable/ic_menu_manage"
+            android:title="重要事件" />
+        <item
+            android:id="@+id/nav_all"
+            android:actionLayout="@id/allday_switch"
+            android:checkable="false"
+            android:title="全选" />
+
+    </group>
+</menu>

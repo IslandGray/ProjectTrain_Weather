@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_weather"
+            android:icon="@android:drawable/btn_star"
+            android:checked="true"
+            android:title="实时天气" />
+        <item
+            android:id="@+id/nav_travel"
+            android:icon="@android:drawable/ic_menu_myplaces"
+            android:title="出行计划" />
+        <item
+            android:id="@+id/nav_calendar"
+            android:icon="@android:drawable/ic_menu_month"
+            android:title="日历" />
+        <item
+            android:id="@+id/nav_manage"
+            android:icon="@android:drawable/ic_menu_manage"
+            android:title="设置" />
+    </group>
+
+    <item android:title="Others">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@android:drawable/ic_menu_send"
+                android:title="分享" />
+            <item
+                android:id="@+id/nav_me"
+                android:icon="@android:drawable/ic_menu_my_calendar"
+                android:title="我" />
+            <item
+                android:id="@+id/nav_exit"
+                android:icon="@android:drawable/ic_menu_revert"
+                android:title="退出" />
+        </menu>
+    </item>
+
+</menu>
