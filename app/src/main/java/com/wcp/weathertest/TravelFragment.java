@@ -2,12 +2,10 @@ package com.wcp.weathertest;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
 
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,8 +18,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Switch;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.wcp.adapter.TravelAdapter;
@@ -142,6 +138,7 @@ public class TravelFragment extends Fragment{
                 startActivity(addNewTravel);
             }
         });
+
     }
 
     @Override
@@ -235,6 +232,10 @@ public class TravelFragment extends Fragment{
         return super.onOptionsItemSelected(item);
     }
 
+
+    /*
+    根据过滤器选择性的进行数据源准备
+     */
     public void SelectShow(Boolean cond1,Boolean cond2,Boolean cond3,Boolean cond4){
         data.clear();
         data.addAll(DataSupport.select().order("Date asc").find(CalendarData.class));

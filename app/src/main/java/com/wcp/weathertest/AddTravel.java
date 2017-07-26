@@ -25,24 +25,16 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.wcp.data.CalendarData;
 
-import org.litepal.crud.DataSupport;
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.Objects;
 
 public class AddTravel extends AppCompatActivity {
 
@@ -206,14 +198,7 @@ public class AddTravel extends AppCompatActivity {
             public void onClick(View v) {
                 final AlertDialog invite;
                 final AlertDialog.Builder inviteDialog = new AlertDialog.Builder(AddTravel.this);
-                /*
-                final View inviteView = LayoutInflater.from(AddTravel.this)
-                        .inflate(R.layout.add_inviter_dialog, null);
-                //inviteDialog.setView(inviteView);
-                final TextView enter = (TextView) inviteView.findViewById(R.id.invite_enter);
-                final TextView cancel = (TextView) inviteView.findViewById(R.id.invite_cancel);
-                final ListView contactsView = (ListView) inviteView.findViewById(R.id.invite_contact);
-                */
+
                 inviteDialog.setTitle("邀请");
 
                 try {
@@ -347,8 +332,6 @@ public class AddTravel extends AppCompatActivity {
 
     private void showCustomizeDialog(final int mode) {
     /* @setView 装入自定义View ==> R.layout.dialog_customize
-     * 由于dialog_customize.xml只放置了一个EditView，因此和图8一样
-     * dialog_customize.xml可自定义更复杂的View
      */
         final AlertDialog.Builder customizeDialog =
                 new AlertDialog.Builder(AddTravel.this){

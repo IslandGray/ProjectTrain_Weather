@@ -8,11 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -21,11 +17,8 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-import com.wcp.data.CalendarData;
 import com.wcp.data.MyJsonTrans;
 import com.wcp.data.WeatherData;
-
-import org.litepal.crud.DataSupport;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -103,8 +96,6 @@ public class WeatherFregment extends Fragment {
                 //mRefreshLayout.setRefreshing(false);
             }
         });
-
-
 
         sp=WeatherFregment.this.getContext().getSharedPreferences("weather",MODE_PRIVATE);
         editor=sp.edit();
@@ -197,36 +188,10 @@ public class WeatherFregment extends Fragment {
 
         return view;
     }
-/*
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu,inflater);
-        // Inflate the menu; this adds items to the action bar if it is present.
-        inflater.inflate(R.menu.main, menu);
-        menu.findItem(R.menu.main).setVisible(true);
-        return;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        else if(id == R.id.action_exit){
-            this.getActivity().finish();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-*/
     private List<Map<String,Object>> getData(){
+        //准备适用于Adapter的数据
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         Map<String, Object> map;
 
@@ -283,7 +248,7 @@ public class WeatherFregment extends Fragment {
         todayItem.setText("\n风力："+NewWeather.result.sk.wind_strength+"\n"
                 +"湿度："+NewWeather.result.sk.humidity+"%\n\n"
                 +"穿衣指数："+NewWeather.result.today.dressing_index+"\n\n"
-                +"紫外钱强度："+NewWeather.result.today.uv_index+"\n"
+                +"紫外线强度："+NewWeather.result.today.uv_index+"\n"
                 +"洗车指数："+NewWeather.result.today.wash_index+"\n\n"
                 +"户外锻炼："+NewWeather.result.today.exercise_index+"\n"
                 +"旅行指数："+NewWeather.result.today.travel_index+"\n\n"

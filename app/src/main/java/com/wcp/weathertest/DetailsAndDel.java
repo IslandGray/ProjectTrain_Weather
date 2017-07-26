@@ -2,7 +2,6 @@ package com.wcp.weathertest;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -262,14 +261,7 @@ public class DetailsAndDel extends AppCompatActivity {
             public void onClick(View v) {
                 final AlertDialog invite;
                 final AlertDialog.Builder inviteDialog = new AlertDialog.Builder(DetailsAndDel.this);
-            /*
-            final View inviteView = LayoutInflater.from(AddTravel.this)
-                    .inflate(R.layout.add_inviter_dialog, null);
-            //inviteDialog.setView(inviteView);
-            final TextView enter = (TextView) inviteView.findViewById(R.id.invite_enter);
-            final TextView cancel = (TextView) inviteView.findViewById(R.id.invite_cancel);
-            final ListView contactsView = (ListView) inviteView.findViewById(R.id.invite_contact);
-            */
+
                 inviteDialog.setTitle("邀请");
 
                 try {
@@ -429,8 +421,6 @@ public class DetailsAndDel extends AppCompatActivity {
 
     private void showCustomizeDialog(final int mode) {
     /* @setView 装入自定义View ==> R.layout.dialog_customize
-     * 由于dialog_customize.xml只放置了一个EditView，因此和图8一样
-     * dialog_customize.xml可自定义更复杂的View
      */
         final AlertDialog.Builder customizeDialog =
                 new AlertDialog.Builder(DetailsAndDel.this){
@@ -635,7 +625,6 @@ public class DetailsAndDel extends AppCompatActivity {
                 }
 
                 try {
-                    //CalendarData newTravel=new CalendarData();
                     OldD.setName(selectedName);
                     OldD.setAllDay(AllDay);
                     if(!AllDay) {

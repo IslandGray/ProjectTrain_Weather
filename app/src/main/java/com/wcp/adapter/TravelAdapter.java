@@ -138,12 +138,7 @@ public class TravelAdapter extends RecyclerView.Adapter<TravelAdapter.ViewHolder
                         selectInviterNumber=contactsList.get(which).split("\n")[1];
 
                         SmsManager manager = SmsManager.getDefault();
-                /*
-                ArrayList<String> list = manager.divideMessage(text);  //因为一条短信有字数限制，因此要将长短信拆分
-                for(String t:list){
-                    manager.sendTextMessage(selectInviterNumber, null, t, null, null);
-                }
-                */
+
                         manager.sendTextMessage(selectInviterNumber, null, text, null, null);
                         Toast.makeText(mContext, "已发送给"+selectInviter, Toast.LENGTH_SHORT).show();
                     }

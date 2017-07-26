@@ -3,25 +3,16 @@ package com.wcp.weathertest;
 import android.app.Activity;
 
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringDef;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.CalendarView;
-import android.widget.Toast;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
@@ -121,7 +112,8 @@ public class CalendarFragment extends DialogFragment implements OnDateSelectedLi
         params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         win.setAttributes(params);
 */
-        /*if (dialog != null) {
+        /*
+        if (dialog != null) {
             DisplayMetrics dm = new DisplayMetrics();
             getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
             dialog.getWindow().setLayout((int) (dm.widthPixels * 1), ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -174,7 +166,7 @@ public class CalendarFragment extends DialogFragment implements OnDateSelectedLi
         //       mcv.setSelectionColor(0xff4285f4);
 
 
-        //加点
+        //为事件加点
         initPoint();
         //周末
         initWeekend();
@@ -228,20 +220,10 @@ public class CalendarFragment extends DialogFragment implements OnDateSelectedLi
      */
     @Override
     public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-        //Toast.makeText(getActivity(),getSelectedDatesString(),Toast.LENGTH_SHORT).show();
-        //       Toast.makeText(getActivity(),"从Activity传递的数据："+(String)timeBundle.get("date"),Toast.LENGTH_SHORT).show();
         IListener.progress(mcv.getSelectedDate().getDate());
 
         selectingNow=mcv.getSelectedDate().getDate();
-/*
-        //选择后,延迟消失
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mContext.dismiss();
-            }
-        }, 1000);
-*/
+
         CalendarDay now=new CalendarDay(selectingNow);
         List<CalendarData> all=DataSupport.select().order("Date asc").find(CalendarData.class);
         myDataset.clear();
@@ -281,9 +263,6 @@ public class CalendarFragment extends DialogFragment implements OnDateSelectedLi
      * 注入实例方法
      * @param
      */
-   /* public void setOnFrgDataListener(OnFrgDataListener listener){
-        IListener=listener;
-    }*/
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);

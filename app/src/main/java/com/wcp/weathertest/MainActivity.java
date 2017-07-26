@@ -1,21 +1,18 @@
 package com.wcp.weathertest;
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.os.SystemClock;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
@@ -24,19 +21,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.telephony.SmsManager;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wcp.data.MyJsonTrans;
@@ -53,25 +41,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,CalendarFragment.OnFrgDataListener {
 
-    private Handler handler;
-    private Thread thread;
     WeatherData NewWeather=new WeatherData();
-    String nowWeather="";
-    String nowCity="西安";
-
-
-    ImageButton sync;
-    ImageButton freshing;
-    ImageButton addCity;
-
-    TextView cityText;
-    TextView weatherText;
-    TextView tempText;
-    LinearLayout days;
-    TextView today;
-    TextView todayItem;
-    ListView weekList;
-    TextView syncTime;
 
     String phone="";
     String text="";
@@ -104,109 +74,6 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         //TODO:Your code here
 
-        /*
-        sync=(ImageButton)findViewById(R.id.fresh);
-        freshing=(ImageButton)findViewById(R.id.freshing);
-        cityText=(TextView)findViewById(R.id.cityname);
-        weatherText=(TextView)findViewById(R.id.curWeather);
-        tempText=(TextView)findViewById(R.id.curTemp);
-        days=(LinearLayout) findViewById(R.id.testLinear);
-        today=(TextView)findViewById(R.id.today);
-        todayItem=(TextView)findViewById(R.id.todayData);
-        weekList=(ListView)findViewById(R.id.tendays);
-        syncTime=(TextView)findViewById(R.id.sync_time);
-        addCity=(ImageButton)findViewById(R.id.addButton);
-
-
-        sp=getSharedPreferences("weather",MODE_PRIVATE);
-        editor=sp.edit();
-
-        //加载上次保存值
-        try {
-            fresh_weather(sp.getString("jsonString", ""));
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-
-        //刷新事件
-        sync.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sync.setVisibility(View.INVISIBLE);
-                freshing.setVisibility(View.VISIBLE);
-
-                thread=new Thread(new Runnable() {
-                    String result="";
-                    String strurl = "http://apis.haoservice.com/weather?key=bf2406eb4df549ee9f5759a53b592848&cityname=";
-                    URL url=null;
-                    @Override
-                    public void run() {
-                        try {
-                            strurl += URLEncoder.encode(nowCity, "utf-8");
-                        }catch(UnsupportedEncodingException e){
-                            e.printStackTrace();
-                        }
-                        try{
-                            url = new URL(strurl);
-                            System.out.println(url.toString());
-                            HttpURLConnection urlConn = (HttpURLConnection)url.openConnection();
-                            InputStreamReader in = new InputStreamReader(urlConn.getInputStream());
-                            BufferedReader bufferReader = new BufferedReader(in);
-                            String readline = null;
-                            while((readline = bufferReader.readLine())!=null){
-                                result += readline;
-                            }
-                            in.close();
-                            urlConn.disconnect();
-                            System.out.println(result);
-                        }catch(Exception e){
-                            System.out.println("发送GET请求出现异常！" + e);
-                            e.printStackTrace();
-                        }
-                        //通信
-                        Message m=handler.obtainMessage();
-                        m.obj=result;
-                        m.what=0x101;
-                        handler.sendMessage(m);
-                        try{
-                            Thread.sleep(1000);
-                        }catch(InterruptedException e){
-                            e.printStackTrace();
-                        }
-                    }
-                });
-                thread.start();
-
-            }
-        });
-        //sync.performClick();
-
-        //变更城市事件
-        addCity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,AddCity.class);
-                Bundle data=new Bundle();
-                intent.putExtras(data);
-                startActivityForResult(intent,0x111);
-            }
-        });
-
-        handler=new Handler(){
-            @Override
-            public void handleMessage(Message msg){
-                if(msg.what==0x101){
-                    //保存为Preference
-                    nowWeather=(String)msg.obj;
-                    editor.putString("jsonString",nowWeather);
-                    editor.commit();
-                    //刷新
-                    fresh_weather(nowWeather);
-                }
-                super.handleMessage(msg);
-            }
-        };
-*/
         try {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             if(savedInstanceState==null) {
@@ -233,6 +100,12 @@ public class MainActivity extends AppCompatActivity
             Log.d("TAG","LitePal new Error");
             e.printStackTrace();
         }
+
+        try{
+            startAlarm();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -244,34 +117,8 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        else if(id == R.id.action_exit){
-            finish();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-*/
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -317,7 +164,7 @@ public class MainActivity extends AppCompatActivity
             });
             AlertDialog about=builder.show();
         } else if(id == R.id.nav_exit) {
-
+            stopAlarm();
             Toast.makeText(MainActivity.this,"已退出",Toast.LENGTH_LONG).show();
             MainActivity.this.finish();
         }
@@ -432,5 +279,22 @@ public class MainActivity extends AppCompatActivity
         if(date!=null){
             String str=sdf.format(date);
         }
+    }
+
+    public void startAlarm(){
+        AlarmManager manager = (AlarmManager)getSystemService(ALARM_SERVICE);
+        int minutes = 1000 * 10;  //
+        Intent toService = new Intent(this,AlarmService.class);
+        PendingIntent pi = PendingIntent.getService(this,0,toService,0);
+        long firstTime = SystemClock.elapsedRealtime();
+        manager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,firstTime,minutes,pi);
+        Toast.makeText(MainActivity.this, "通知已开启", Toast.LENGTH_SHORT).show();
+    }
+    public void stopAlarm(){
+        AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        Intent intent = new Intent(this,AlarmService.class);
+        PendingIntent pi = PendingIntent.getService(this,0,intent,0);
+        manager.cancel(pi);
+        Toast.makeText(MainActivity.this, "通知已关闭", Toast.LENGTH_SHORT).show();
     }
 }

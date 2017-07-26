@@ -1,6 +1,5 @@
 package com.wcp.adapter;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -8,11 +7,8 @@ import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import com.prolificinteractive.materialcalendarview.spans.DotSpan;
 import com.wcp.data.CalendarData;
-import com.wcp.weathertest.R;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,33 +28,6 @@ public class CalendarDecorator implements DayViewDecorator {
 
     @Override
     public void decorate(DayViewFacade view) {
-        /*
-        for(Object i:change){
-            String kind=((CalendarData)i).getBelong();
-            switch(kind){
-                case "home":{
-                    color=mContext.getResources().getColor(R.color.home);
-                    break;
-                }
-                case "work":{
-                    color=mContext.getResources().getColor(R.color.work);
-                    break;
-                }
-                case "holiday":{
-                    color=mContext.getResources().getColor(R.color.holiday);
-                    break;
-                }
-                case "warn":{
-                    color=mContext.getResources().getColor(R.color.warn);
-                    break;
-                }
-                default:{
-                    color=mContext.getResources().getColor(R.color.black);
-                    break;
-                }
-            }
-        }
-        */
         view.addSpan(new DotSpan(15,color));
     }
 
