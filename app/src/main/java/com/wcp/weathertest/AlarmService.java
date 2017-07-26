@@ -78,11 +78,12 @@ public class AlarmService extends Service {
                     .setSmallIcon(R.drawable.ic_flight_takeoff_black_36dp)  //设置小图标
                     .setContentIntent(pi)       //单击后跳转
                     .setContentTitle("即将到来的新日程")
-                    .setContentText(event.getName()+"大约在"+(event.getDate().getTime()-(new Date()).getTime())/(1000*60)+"分钟后开始")
+                    .setContentText("\""+event.getName()+"\"大约在"+(event.getDate().getTime()-(new Date()).getTime())/(1000*60)+"分钟后开始")
                     .setDefaults(Notification.DEFAULT_VIBRATE)   //震动
                     .setAutoCancel(true) // 点击后自动取消
                     .build();
-            manager.notify((int)System.currentTimeMillis(),notification);
+            //manager.notify((int)(System.currentTimeMillis()),notification);
+            manager.notify(noticeEvent.indexOf(event),notification);
         }
     }
 

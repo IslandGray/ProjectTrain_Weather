@@ -76,7 +76,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         //TODO:your code here
         try {
             int color = 0;
-            SimpleDateFormat fn = new SimpleDateFormat("hh:mm");
+            SimpleDateFormat fn = new SimpleDateFormat("HH:mm");
             switch (mDataset.get(position).getBelong()) {
                 case "home": {
                     color = R.color.home;

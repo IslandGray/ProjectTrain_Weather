@@ -540,18 +540,24 @@ public class AddTravel extends AppCompatActivity {
                 newTravel.setRemind(rem);
                 newTravel.setInvite(selectInviter);
                 newTravel.setBelong(selectCalendar);
-                try {
-                    newTravel.saveThrows();
-                }catch(Exception e) {
-                    e.printStackTrace();
-                    Toast.makeText(AddTravel.this,"save error!",Toast.LENGTH_LONG).show();
+                if(newTravel.getBelong()!=null && newTravel.getDate()!=null && newTravel.getEndDate()!=null) {
+                    if(newTravel.getDate().after(newTravel.getEndDate())){
+                        Toast.makeText(AddTravel.this, "所选时间不合法", Toast.LENGTH_LONG).show();
+                    }else {
+                        try {
+                            newTravel.saveThrows();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Toast.makeText(AddTravel.this, "save error!", Toast.LENGTH_LONG).show();
+                        }
+                        Toast.makeText(AddTravel.this, "已保存!", Toast.LENGTH_LONG).show();
+
+                        Log.d("TAG",newTravel.toString());
+                        finish();
+                    }
+                }else{
+                    Toast.makeText(AddTravel.this, "有未填写的项!", Toast.LENGTH_LONG).show();
                 }
-                Toast.makeText(AddTravel.this, "已保存!", Toast.LENGTH_LONG).show();
-
-                Log.d("TAG",newTravel.toString());
-
-
-                finish();
 
             }
         }

@@ -122,8 +122,8 @@ public class DetailsAndDel extends AppCompatActivity {
 
 
         SimpleDateFormat fm = new SimpleDateFormat("yyyy年MM月dd日");
-        SimpleDateFormat fn = new SimpleDateFormat("hh:mm");
-        SimpleDateFormat fall = new SimpleDateFormat("yyyy年MM月dd日 hh:mm");
+        SimpleDateFormat fn = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat fall = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
 
         Intent id_i = getIntent();
         Bundle id_b = id_i.getExtras();
@@ -619,6 +619,9 @@ public class DetailsAndDel extends AppCompatActivity {
                         }
                     }
                 }
+                if(selectInviter==null){
+                    OldD.setToDefault("Invite");
+                }
                 if(selectedRemind.contains((int)0) ||selectedRemind.size()==0){
                     rem.clear();
                     OldD.setToDefault("Remind");
@@ -637,18 +640,27 @@ public class DetailsAndDel extends AppCompatActivity {
                     OldD.setRemind(rem);
                     OldD.setInvite(selectInviter);
                     OldD.setBelong(selectCalendar);
-                    if (OldD.update(Integer.valueOf(id)) == 1) {
-                        Toast.makeText(DetailsAndDel.this, "已保存!", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(DetailsAndDel.this, "save error!", Toast.LENGTH_LONG).show();
-                    }
 
-                    Log.d("TAG", OldD.toString());
+                    if(OldD.getBelong()!=null && OldD.getDate()!=null && OldD.getEndDate()!=null) {
+                        if(OldD.getDate().after(OldD.getEndDate())) {
+                            Toast.makeText(DetailsAndDel.this, "所选时间不合法", Toast.LENGTH_LONG).show();
+                        }else{
+                            if (OldD.update(Integer.valueOf(id)) == 1) {
+                                Toast.makeText(DetailsAndDel.this, "已保存!", Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(DetailsAndDel.this, "save error!", Toast.LENGTH_LONG).show();
+                            }
+
+                            Log.d("TAG", OldD.toString());
+                            finish();
+                        }
+                    }else{
+                        Toast.makeText(DetailsAndDel.this, "有未填写的项!", Toast.LENGTH_LONG).show();
+                    }
                 }catch(Exception e){
                     e.printStackTrace();
                 }
 
-                finish();
 
             }
         }

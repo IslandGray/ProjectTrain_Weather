@@ -219,7 +219,10 @@ public class WeatherFregment extends Fragment {
                     map.put("icon",R.drawable.w_rain_small);
                     break;
                 }
-
+                case "阵雨":{
+                    map.put("icon",R.drawable.w_rain_part);
+                    break;
+                }
                 default:{
                     map.put("icon",R.drawable.w_na);
                 }
@@ -256,6 +259,30 @@ public class WeatherFregment extends Fragment {
                 +"干燥程度："+NewWeather.result.today.drying_index+"\n");
         nowW.setText(NewWeather.result.today.temperature+"°");
 
+        /*
+        switch(NewWeather.result.today.weather){
+            case "小雨":
+            case "阵雨":
+            case "中雨":
+            case "大雨":
+            case "雷阵雨":{
+                view.setBackground(getResources().getDrawable(R.drawable.rain));
+                break;
+            }
+            case "晴":{
+                view.setBackground(getResources().getDrawable(R.drawable.sunny));
+                break;
+            }
+            case "多云":
+            case "阴":{
+                view.setBackground(getResources().getDrawable(R.drawable.yin));
+                break;
+            }
+            default:{
+                view.setBackground(getResources().getDrawable(R.drawable.light));
+            }
+        }
+*/
 
         final SimpleAdapter adapter=new SimpleAdapter(WeatherFregment.this.getContext(),getData(),R.layout.weatheritem,
                 new String[]{"week_day","icon","week_temp"},

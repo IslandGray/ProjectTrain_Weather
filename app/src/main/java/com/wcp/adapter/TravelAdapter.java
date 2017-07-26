@@ -45,7 +45,7 @@ public class TravelAdapter extends RecyclerView.Adapter<TravelAdapter.ViewHolder
     Context mContext;
 
     SimpleDateFormat fm=new SimpleDateFormat("yyyy年MM月dd日");
-    SimpleDateFormat fn=new SimpleDateFormat("hh:mm");
+    SimpleDateFormat fn=new SimpleDateFormat("HH:mm");
 
     ArrayAdapter<String> adapter;
     List<String> contactsList = new ArrayList<>();

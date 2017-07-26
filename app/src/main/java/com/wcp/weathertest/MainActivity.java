@@ -34,6 +34,7 @@ import org.litepal.LitePal;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -209,12 +210,12 @@ public class MainActivity extends AppCompatActivity
                 selectInviterNumber=contactsList.get(which).split("\n")[1];
 
                 SmsManager manager = SmsManager.getDefault();
-                /*
+
                 ArrayList<String> list = manager.divideMessage(text);  //因为一条短信有字数限制，因此要将长短信拆分
                 for(String t:list){
                     manager.sendTextMessage(selectInviterNumber, null, t, null, null);
                 }
-                */
+
                 manager.sendTextMessage(selectInviterNumber, null, text, null, null);
                 Toast.makeText(getApplicationContext(), "已发送给"+selectInviter, Toast.LENGTH_SHORT).show();
             }
@@ -283,11 +284,17 @@ public class MainActivity extends AppCompatActivity
 
     public void startAlarm(){
         AlarmManager manager = (AlarmManager)getSystemService(ALARM_SERVICE);
-        int minutes = 1000 * 10;  //
+        int minutes = 1000*2;  //
         Intent toService = new Intent(this,AlarmService.class);
         PendingIntent pi = PendingIntent.getService(this,0,toService,0);
         long firstTime = SystemClock.elapsedRealtime();
+        /*
         manager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,firstTime,minutes,pi);
+        */
+        Calendar cal=Calendar.getInstance();
+        long c=cal.getTimeInMillis();
+        manager.setRepeating(AlarmManager.RTC_WAKEUP,c,minutes,pi);
+
         Toast.makeText(MainActivity.this, "通知已开启", Toast.LENGTH_SHORT).show();
     }
     public void stopAlarm(){
